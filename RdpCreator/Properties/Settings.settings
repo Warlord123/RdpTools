@@ -1,0 +1,52 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RdpCreator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server=172.17.74.9;Port=3306;Uid=ms;Pwd=ms;Database=ms;character set=utf8</Value>
+    </Setting>
+    <Setting Name="AttributeQuery" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SELECT A1.ID ,concat( A1.Name,'(',A2.Name,')') as Name FROM  Attributes A1 join  Attributes A2 on A1.Type=A2.ID where A1.Type&gt;1</Value>
+    </Setting>
+    <Setting Name="ServerNames" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SELECT W.ID , W.IP , W.Name ,ifnull( R.Name,W.Name) as RdpName ,ifnull( R.Domain,0)*1 as Domain
+FROM  WIN_server W left join RDP_ServerNames R on R.ServerID=W.ID
+where W.Poll_Users!=0;</Value>
+    </Setting>
+    <Setting Name="ServerAttributes" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SELECT A.ServerID , A.AttributeID
+FROM   Server_Attributes A join WIN_server w on A.ServerID=w.ID
+where w.Poll_Users!=0;</Value>
+    </Setting>
+    <Setting Name="RdpTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">screen mode id:i:2
+session bpp:i:15
+full address:s:{0}
+username:s:{1}
+compression:i:1
+keyboardhook:i:2
+audiomode:i:0
+redirectdrives:i:1
+redirectprinters:i:1
+redirectcomports:i:0
+redirectsmartcards:i:1
+redirectclipboard:i:1
+displayconnectionbar:i:1
+autoreconnection enabled:i:1
+authentication level:i:0
+domain:s:{2}
+disable wallpaper:i:1
+disable full window drag:i:1
+disable menu anims:i:1
+disable themes:i:1
+disable cursor setting:i:0
+bitmapcachepersistenable:i:1</Value>
+    </Setting>
+    <Setting Name="DefaultRdpDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ToClipboard" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

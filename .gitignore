@@ -1,0 +1,9 @@
+
+*.suo
+*.user
+*/obj/*
+*/bin/*
+*.orig
+*.rej
+*.patch
+*.log
