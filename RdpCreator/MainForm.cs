@@ -170,5 +170,12 @@ namespace RdpCreator
         {
             Settings.Default.Save();
         }
+
+
+
+        private void cbFilters_CheckedChanged(object sender, EventArgs e)
+        {
+            scMainLeft.Panel1Collapsed = !cbFilters.Checked;
+        }
     }
 }
