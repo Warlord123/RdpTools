@@ -34,15 +34,6 @@ namespace RdpCreator
         {
             Attributes = new List<int>();
         }
-        public TServer(int aID,string aIP,string aName,string aRdpName,bool aDomain)
-        {
-            ID = aID;
-            IP = aIP;
-            Name = aName;
-            RdpName = aRdpName;
-            Domain = aDomain;
-            Attributes = new List<int>();
-        }
 
         override public String ToString()
         {
