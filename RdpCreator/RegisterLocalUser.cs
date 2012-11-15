@@ -14,11 +14,13 @@ namespace RdpCreator
         //http://www.gotdotnet.ru/blogs/sergeyhomyuk/10326/
         public static String CreateLocalUser(string login, string fullName, string password, TServer Server)
         {
-            DirectoryEntry root = new DirectoryEntry(string.Format("WinNT://{0},computer", Server.IP));
-            using (DirectoryEntry user = root.Children.Add(login, "user"))
+
+            try
             {
-                try
+                DirectoryEntry root = new DirectoryEntry(string.Format("WinNT://{0},computer", Server.IP));
+                using (DirectoryEntry user = root.Children.Add(login, "user"))
                 {
+
                     user.Properties["FullName"].Value = fullName;
                     user.Properties["Description"].Value = DateTime.Now.ToString();
                     user.Invoke("SetPassword", new object[] { password });
@@ -29,20 +31,12 @@ namespace RdpCreator
 
                     DirectoryEntry grp = root.Children.Find("Спутник ОТЦ3 Челябинск", "group");
                     if (grp != null) { grp.Invoke("Add", new object[] { UserPath }); }
-
-                    /* */
-
-                    return String.Format( "Пользователь {0} создан на сервере {1}.",login,Server);
-
-
-
+                    return String.Format("Пользователь {0} создан на сервере {1}.", login, Server);
                 }
-                catch (COMException e)
-                {
-                    //if (e.ErrorCode == -2147022672)
-                    return e.Message;
-
-                }
+            }
+            catch (COMException e)
+            {
+                return String.Format("Пользователь {0} не создан на сервере {1}. Ошибка: '{2}'", login, Server,e.Message);
             }
         }
 

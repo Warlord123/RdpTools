@@ -181,6 +181,7 @@ namespace RdpCreator
         private void button1_Click_1(object sender, EventArgs e)
 
         {
+            if (lbServers.SelectedItem!=null)
             tbDebug.Items.Add(
             RegisterLocalUser.CreateLocalUser("TestUser", "Full Test User Name", "Qwerty1", (TServer)lbServers.SelectedItem)
             );
