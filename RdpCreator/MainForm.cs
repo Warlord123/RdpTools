@@ -177,5 +177,13 @@ namespace RdpCreator
         {
             scMainLeft.Panel1Collapsed = !cbFilters.Checked;
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+
+        {
+            tbDebug.Items.Add(
+            RegisterLocalUser.CreateLocalUser("TestUser", "Full Test User Name", "New", Data.Servers[54])
+            );
+        }
     }
 }

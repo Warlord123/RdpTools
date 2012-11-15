@@ -51,6 +51,7 @@
             this.scServerFilters = new System.Windows.Forms.SplitContainer();
             this.cbFilters = new System.Windows.Forms.CheckBox();
             this.tCreateUser = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.tcMain.SuspendLayout();
             this.tRDP.SuspendLayout();
             this.gbUsers.SuspendLayout();
@@ -75,6 +76,7 @@
             this.scServerFilters.Panel1.SuspendLayout();
             this.scServerFilters.Panel2.SuspendLayout();
             this.scServerFilters.SuspendLayout();
+            this.tCreateUser.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcMain
@@ -354,6 +356,7 @@
             // 
             // tCreateUser
             // 
+            this.tCreateUser.Controls.Add(this.button1);
             this.tCreateUser.Location = new System.Drawing.Point(4, 22);
             this.tCreateUser.Name = "tCreateUser";
             this.tCreateUser.Padding = new System.Windows.Forms.Padding(3);
@@ -361,6 +364,16 @@
             this.tCreateUser.TabIndex = 1;
             this.tCreateUser.Text = "Регистрация пользователя";
             this.tCreateUser.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(121, 100);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // MainForm
             // 
@@ -401,6 +414,7 @@
             this.scServerFilters.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scServerFilters)).EndInit();
             this.scServerFilters.ResumeLayout(false);
+            this.tCreateUser.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,6 +445,7 @@
         private System.Windows.Forms.SplitContainer scMainLeft;
         private System.Windows.Forms.CheckBox cbFilters;
         private System.Windows.Forms.TabPage tCreateUser;
+        private System.Windows.Forms.Button button1;
     }
 }
 
