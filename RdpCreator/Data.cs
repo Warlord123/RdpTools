@@ -15,11 +15,8 @@ namespace RdpCreator
             return Name;
         }
 
-        public TServerAtribute(int aID, string aName)
-        {
-            ID = aID;
-            Name = aName;
-        }
+        public TServerAtribute()
+        {}
 
        
     }
@@ -33,6 +30,10 @@ namespace RdpCreator
         public bool   Domain { get; set; }
         public List<int> Attributes { get; set; }
 
+        public TServer()
+        {
+            Attributes = new List<int>();
+        }
         public TServer(int aID,string aIP,string aName,string aRdpName,bool aDomain)
         {
             ID = aID;
@@ -49,10 +50,20 @@ namespace RdpCreator
         }
     }
 
+    class TLocalGroup
+    {
+         public int ServerID { get; set; }
+         public int ID { get; set; }
+         public string Name { get; set; }
+         public string Description { get; set; }
+   
+    }
+
     static class Data
     {
         public static List<TServerAtribute> Attributes;
         public static Dictionary<int, TServer> Servers;
+        public static List<TLocalGroup> SpecialGroups;
     }
 
 

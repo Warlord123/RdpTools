@@ -60,8 +60,7 @@ namespace RdpCreator
 
                     while (reader.Read())
                     {
-                        Data.Attributes.Add(new TServerAtribute (Int32.Parse( reader[0].ToString()),reader[1].ToString()));
-
+                        Data.Attributes.Add(new TServerAtribute{ID=reader.GetInt32(0), Name= reader.GetString(1)});
                     }
                 }
   
@@ -84,12 +83,17 @@ namespace RdpCreator
 
                     while (reader.Read())
                     {
-                        int ID = int.Parse(reader[0].ToString());
-                        bool f = reader.IsDBNull(4) ? false : reader.GetInt32(4)!=0;
-                        Data.Servers.Add(ID, new TServer(ID, reader[1].ToString(),
-                            reader[2].ToString()
-                            ,reader[3].ToString()
-                            ,f));
+                        int aID = reader.GetInt32(0);
+                        Data.Servers.Add(aID, 
+                            new TServer
+                        {
+                            ID = aID,
+                            IP=reader[1].ToString(),
+                            Name=reader[2].ToString()
+                            ,
+                            RdpName= reader[3].ToString()
+                            ,Domain=reader.GetBoolean(4)
+                        });
 
                     }
                 }

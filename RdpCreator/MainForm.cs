@@ -182,7 +182,7 @@ namespace RdpCreator
 
         {
             tbDebug.Items.Add(
-            RegisterLocalUser.CreateLocalUser("TestUser", "Full Test User Name", "New", Data.Servers[54])
+            RegisterLocalUser.CreateLocalUser("TestUser", "Full Test User Name", "Qwerty1", (TServer)lbServers.SelectedItem)
             );
         }
     }

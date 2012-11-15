@@ -27,12 +27,12 @@ namespace RdpCreator
                     string UserPath = user.Path.ToString().Replace(Server.IP, Server.Name);
 
 
-                    DirectoryEntry grp = root.Children.Find("MS-IT", "group");
+                    DirectoryEntry grp = root.Children.Find("Спутник ОТЦ3 Челябинск", "group");
                     if (grp != null) { grp.Invoke("Add", new object[] { UserPath }); }
 
                     /* */
 
-                    return "Пользователь создан";
+                    return String.Format( "Пользователь {0} создан на сервере {1}.",login,Server);
 
 
 
