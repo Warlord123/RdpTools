@@ -15,10 +15,6 @@ namespace RdpCreator
             return Name;
         }
 
-        public TServerAtribute()
-        {}
-
-       
     }
 
     class TServer
@@ -50,10 +46,16 @@ namespace RdpCreator
    
     }
 
+    class TServerAttributes
+    {
+        public int ServerID { get; set; }
+        public int AttributeID { get; set; }
+    }
+
     static class Data
     {
         public static List<TServerAtribute> Attributes;
-        public static Dictionary<int, TServer> Servers;
+        public static List<TServer> Servers;
         public static List<TLocalGroup> SpecialGroups;
     }
 

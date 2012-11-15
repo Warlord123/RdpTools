@@ -9,7 +9,7 @@
       <Value Profile="(Default)">SELECT A1.ID ,concat( A1.Name,'(',A2.Name,')') as Name FROM  Attributes A1 join  Attributes A2 on A1.Type=A2.ID where A1.Type&gt;1</Value>
     </Setting>
     <Setting Name="ServerNames" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SELECT W.ID , W.IP , W.Name ,ifnull( R.Name,W.Name) as RdpName ,ifnull( R.Domain,0)*1 as Domain
+      <Value Profile="(Default)">SELECT W.ID , W.IP , W.Name ,ifnull( R.Name,W.Name) as RdpName ,R.Domain
 FROM  WIN_server W left join RDP_ServerNames R on R.ServerID=W.ID
 where W.Poll_Users!=0;</Value>
     </Setting>

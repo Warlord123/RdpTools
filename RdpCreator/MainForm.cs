@@ -31,7 +31,7 @@ namespace RdpCreator
             lbServerAtributes.Items.AddRange(Data.Attributes.ToArray());
             cbNot.Items.AddRange(Data.Attributes.ToArray());
 
-            foreach (TServer S in Data.Servers.Values)
+            foreach (TServer S in Data.Servers)
             {
                 lbServers.Items.Add(S, true);
             }
@@ -50,7 +50,7 @@ namespace RdpCreator
                                                          select I.ID);
 
 
-            IEnumerable<TServer> res1 = from TServer S in Data.Servers.Values
+            IEnumerable<TServer> res1 = from TServer S in Data.Servers
                                         where HasAttribute.IsSubsetOf(S.Attributes)  &&  NotHasAttribute.Intersect(S.Attributes).Count()==0
                                         select S;
             lbServers.Items.Clear();

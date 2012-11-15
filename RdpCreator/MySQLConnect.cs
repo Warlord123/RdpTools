@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using RdpCreator.Properties;
-
+using System.Reflection;
 
 namespace RdpCreator
 {
 
 
 
+    using TPropertyMapper = List<TPropertyMapping>;
 
     public static class MySQLData
     {
@@ -44,76 +45,7 @@ namespace RdpCreator
                 _conn.Close();
             Connected = false;
         }
-
-         static void LoadAttributeList()
-        {
         
-            //Загружаем список серверов для опроса
-            _command = new MySqlCommand(Settings.Default.AttributeQuery, _conn);
-            Data.Attributes = new List<TServerAtribute>();
-
-            
-            if (Connected)
-    
-                using (MySqlDataReader reader = _command.ExecuteReader())
-                {
-
-                    while (reader.Read())
-                    {
-                        Data.Attributes.Add(new TServerAtribute{ID=reader.GetInt32(0), Name= reader.GetString(1)});
-                    }
-                }
-  
-            
-
-        }
-
-         static void LoadServerList()
-        {
-            
-            //Загружаем список серверов для опроса
-            _command = new MySqlCommand(Settings.Default.ServerNames, _conn);
-            Data.Servers = new Dictionary<int, TServer>();
-
-
-            if (Connected)
-            {
-                using (MySqlDataReader reader = _command.ExecuteReader())
-                {
-
-                    while (reader.Read())
-                    {
-                        int aID = reader.GetInt32(0);
-                        Data.Servers.Add(aID, 
-                            new TServer
-                        {
-                            ID = aID,
-                            IP=reader[1].ToString(),
-                            Name=reader[2].ToString()
-                            ,
-                            RdpName= reader[3].ToString()
-                            ,Domain=reader.GetBoolean(4)
-                        });
-
-                    }
-                }
-
-                _command = new MySqlCommand(Settings.Default.ServerAttributes, _conn);
-                using (MySqlDataReader reader = _command.ExecuteReader())
-                {
-
-                    while (reader.Read())
-                    {
-                        int ID = int.Parse(reader[0].ToString());
-                        int AttrubuteID = int.Parse(reader[1].ToString());
-                        Data.Servers[ID].Attributes.Add(AttrubuteID);
-                    }
-                }
-
-            }
-
-        }
-
         public static void RunSQL(string query)
         {
             _command = new MySqlCommand(query, _conn);
@@ -138,11 +70,39 @@ namespace RdpCreator
             }
         }
 
+
+        static List<T> LoadList<T>(String Query) where T: new()
+        {
+            _command = new MySqlCommand(Query, _conn);
+
+            //Создаем новый список результатов
+             List<T> Result = new List<T>();
+
+            if (Connected)
+
+                using (MySqlDataReader reader = _command.ExecuteReader())
+                {
+                    //Создаем отображение полей в свойства.
+                    TPropertyMapper M = ObjectLoader.Test(typeof(T), reader);
+
+                    while (reader.Read())
+                    {
+                        T A = new T();
+                        Result.Add(A);
+                        ObjectLoader.Read(A, M, reader);
+                    }
+                }
+            return Result;
+        }
+
         public static void LoadData()
         {
             Connect(); //Соединяемся с сервером БД.
-            LoadAttributeList();
-            LoadServerList();
+            Data.Servers = LoadList<TServer>(Settings.Default.ServerNames);
+            List<TServerAttributes> Attr = LoadList<TServerAttributes>(Settings.Default.ServerAttributes);
+            Attr.ForEach(delegate(TServerAttributes A) { Data.Servers.Find(S => S.ID == A.ServerID).Attributes.Add(A.AttributeID); });
+            Data.Attributes = LoadList<TServerAtribute>(Settings.Default.AttributeQuery);
+            Data.SpecialGroups = LoadList<TLocalGroup>("SELECT ServerID , ID , Name , Description FROM SpecialGroup;");
             Close(); //Отключаемся от сервера.
         }
 

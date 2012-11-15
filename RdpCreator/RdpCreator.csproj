@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectLoader.cs" />
     <Compile Include="RDPLink.cs" />
     <Compile Include="RegisterLocalUser.cs" />
     <Compile Include="Transliterate.cs" />

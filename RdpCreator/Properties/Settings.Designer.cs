@@ -50,9 +50,9 @@ namespace RdpCreator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SELECT W.ID , W.IP , W.Name ,ifnull( R.Name,W.Name) as RdpName ,ifnull( R.Domain," +
-            "0)*1 as Domain\r\nFROM  WIN_server W left join RDP_ServerNames R on R.ServerID=W.I" +
-            "D\r\nwhere W.Poll_Users!=0;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SELECT W.ID , W.IP , W.Name ,ifnull( R.Name,W.Name) as RdpName ,R.Domain\r\nFROM  W" +
+            "IN_server W left join RDP_ServerNames R on R.ServerID=W.ID\r\nwhere W.Poll_Users!=" +
+            "0;")]
         public string ServerNames {
             get {
                 return ((string)(this["ServerNames"]));
