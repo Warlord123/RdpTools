@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -88,19 +89,18 @@ namespace RdpCreator
              from TServer S in lbServers.CheckedItems
              select new TUserInfo { Login = UserLogin, ServerIP = S.IP, ServerName = S.RdpName, Domain = (S.Domain ? "Mechel" : "") };
 
-            List<string> FileList = new List<string>();
+            
+            StringCollection FileList = new StringCollection();
             foreach (TUserInfo U in product)
             {
-
-                FileList.Add(RDPLink.CreateRDP(U, RdpDir));
-
+                string RdpFile = RDPLink.CreateRDP(U, RdpDir);
+                FileList.Add(RdpFile);
+                tbDebug.Items.Add(RdpFile);
             }
-            tbDebug.Items.AddRange(FileList.ToArray());
 
             if (cbRdpCopyToClipboard.Checked) //Clipboard
             {
-                Clipboard.SetDataObject(new DataObject("FileDrop", FileList.ToArray()));
-
+                Clipboard.SetFileDropList(FileList);
             }
 
             System.Diagnostics.Process.Start("IExplore.exe", RdpDir);
