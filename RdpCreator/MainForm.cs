@@ -185,6 +185,29 @@ namespace RdpCreator
             tbDebug.Items.Add(
             RegisterLocalUser.CreateLocalUser("TestUser", "Full Test User Name", "Qwerty1", (TServer)lbServers.SelectedItem)
             );
+        private void bCreateList_Click(object sender, EventArgs e)
+        {
+            tbDebug.Items.Clear();
+
+            tbDebug.Items.AddRange((from TServer S in lbServers.CheckedItems select S.IP).ToArray());
+        }
+
+        private void cmtbDebug_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            DialogResult R = saveFileDialog.ShowDialog();
+            if (R == DialogResult.OK)
+            {
+               String FileName = saveFileDialog.FileName;
+
+                FileStream F = new FileStream(FileName, FileMode.Create, FileAccess.Write);
+                StreamWriter SW = new StreamWriter(F, System.Text.Encoding.Default);
+                foreach (String S in tbDebug.Items)
+                {
+                    SW.WriteLine(S);
+                }
+                SW.Flush();
+                F.Close();
+            }
         }
     }
 }
