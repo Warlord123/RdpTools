@@ -192,10 +192,8 @@ namespace RdpCreator
             tbDebug.Items.AddRange((from TServer S in lbServers.CheckedItems select S.IP).ToArray());
         }
 
-        private void cmtbDebug_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void tsSaveToFile_Click(object sender, EventArgs e)
         {
-            if (e.ClickedItem == tsSaveToFile)
-            {
                 DialogResult R = saveFileDialog.ShowDialog();
                 if (R == DialogResult.OK)
                 {
@@ -210,16 +208,13 @@ namespace RdpCreator
                     SW.Flush();
                     F.Close();
                 }
-            }
-            if (e.ClickedItem == tsCopytoClipboard)
-            {
+        }
+
+        private void tsCopytoClipboard_Click(object sender, EventArgs e)
+        {
               String[] S = new String[tbDebug.Items.Count];
               tbDebug.Items.CopyTo(S, 0);
               Clipboard.SetText(String.Join("\n",S));
-            }
-
-        }
-
         }
     }
 }
