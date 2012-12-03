@@ -194,20 +194,32 @@ namespace RdpCreator
 
         private void cmtbDebug_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            DialogResult R = saveFileDialog.ShowDialog();
-            if (R == DialogResult.OK)
+            if (e.ClickedItem == tsSaveToFile)
             {
-               String FileName = saveFileDialog.FileName;
-
-                FileStream F = new FileStream(FileName, FileMode.Create, FileAccess.Write);
-                StreamWriter SW = new StreamWriter(F, System.Text.Encoding.Default);
-                foreach (String S in tbDebug.Items)
+                DialogResult R = saveFileDialog.ShowDialog();
+                if (R == DialogResult.OK)
                 {
-                    SW.WriteLine(S);
+                    String FileName = saveFileDialog.FileName;
+
+                    FileStream F = new FileStream(FileName, FileMode.Create, FileAccess.Write);
+                    StreamWriter SW = new StreamWriter(F, System.Text.Encoding.Default);
+                    foreach (String S in tbDebug.Items)
+                    {
+                        SW.WriteLine(S);
+                    }
+                    SW.Flush();
+                    F.Close();
                 }
-                SW.Flush();
-                F.Close();
             }
+            if (e.ClickedItem == tsCopytoClipboard)
+            {
+              String[] S = new String[tbDebug.Items.Count];
+              tbDebug.Items.CopyTo(S, 0);
+              Clipboard.SetText(String.Join("\n",S));
+            }
+
+        }
+
         }
     }
 }
